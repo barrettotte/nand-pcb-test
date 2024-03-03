@@ -4,6 +4,12 @@
 
   (paper "A4")
 
+  (title_block
+    (title "nand-pcb-test")
+    (comment 1 "Barrett Otte")
+    (comment 2 "https://github.com/barrettotte/nand-pcb-test")
+  )
+
   (lib_symbols
     (symbol "Connector:Screw_Terminal_01x02" (pin_names (offset 1.016) hide) (in_bom yes) (on_board yes)
       (property "Reference" "J" (id 0) (at 0 2.54 0)
@@ -470,7 +476,6 @@
       )
     )
   )
-
 
   (junction (at 63.5 73.66) (diameter 0) (color 0 0 0 0)
     (uuid 3d272fbb-961b-415d-9ff8-bbcae768b6c2)
