@@ -124,7 +124,7 @@ Bits I will be using:
   - Click Generate Geometry
 - Select `*-Edge_Cuts.gbr_cutout`
   - Create CNC Job section
-  - Cut Z: -1.8
+  - Cut Z: -2
   - Travel Z: 2.0
   - Feed Rate: 3.0
   - Tool dia: 2.5
