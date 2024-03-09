@@ -95,13 +95,13 @@ Bits I will be using:
   - Click Generate Geometry
 - Select `*-B_Cu.gbr_iso`
   - Create CNC Job section
-  - Cut Z: -0.05
+  - Cut Z: -0.03
   - Travel Z: 2
   - Feed Rate: 100.0
   - Tool dia: 0.2
   - Spindle speed: 10000
   - Multi-Depth: yes
-  - Depth/pass: 0.01
+  - Depth/pass: 0.015
   - Click Generate
 - Select `*-B_Cu.gbr_iso_cnc`, export G-Code to `B_Cu.nc`
 - Select `*-PTH.drl`
