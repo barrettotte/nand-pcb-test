@@ -681,16 +681,16 @@
   (segment (start 117.55 70.41) (end 116.84 71.12) (width 0.5) (layer "B.Cu") (net 8) (tstamp be473da8-4e61-4c86-9a6a-acec76568ba3))
   (segment (start 111.05 64.48) (end 117.55 64.48) (width 0.5) (layer "B.Cu") (net 8) (tstamp f0f00405-183b-4db3-b459-970452bf88a6))
 
-  (zone (net 1) (net_name "GND") (layer "B.Cu") (tstamp 831d20fe-ba92-44be-a6b4-408eeed24f21) (hatch edge 0.508)
+  (zone (net 1) (net_name "GND") (layer "B.Cu") (tstamp 7fcd8396-ab03-4391-a76c-27d62580d1ed) (hatch edge 0.508)
     (connect_pads (clearance 0))
     (min_thickness 0.254) (filled_areas_thickness no)
-    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508))
+    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508) (island_removal_mode 1) (island_area_min 0))
     (polygon
       (pts
-        (xy 129.54 88.9)
-        (xy 81.28 88.9)
-        (xy 81.28 55.88)
-        (xy 129.54 55.88)
+        (xy 131.438268 90.805251)
+        (xy 79.374997 90.804991)
+        (xy 79.375462 53.974991)
+        (xy 131.445462 53.987458)
       )
     )
     (filled_polygon

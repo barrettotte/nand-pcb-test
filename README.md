@@ -87,9 +87,13 @@ Bits I will be using:
 - Options tab
   - Set units to mm
 - Select `*-B_Cu.gbr`
-  - Non-copper regions section
+  - Isolation Routing section
+  - Tool dia: 0.2
+  - Width (# passes): 2
+  - Pass overlap: 0.25
+  - Combine Passes: yes
   - Click Generate Geometry
-- Select `*-B_Cu.gbr_noncopper`
+- Select `*-B_Cu.gbr_iso`
   - Create CNC Job section
   - Cut Z: -0.05
   - Travel Z: 2
@@ -99,18 +103,18 @@ Bits I will be using:
   - Multi-Depth: yes
   - Depth/pass: 0.01
   - Click Generate
-- Select `*-B_Cu.gbr_noncopper_cnc`, export G-Code to `B_Cu.nc`
+- Select `*-B_Cu.gbr_iso_cnc`, export G-Code to `B_Cu.nc`
 - Select `*-PTH.drl`
   - If too many sizes of drills, go back to Kicad and change hole sizes of individual components (we can always redrill by hand later if holes too small)
   - Create CNC Job section
-  - Cut Z: -1.8
+  - Cut Z: -2
   - Travel Z: 2
   - Feed Rate: 100.0
   - Tool Change: yes
   - Tool Change Z: 15.0
   - Spindle Speed: 10000
   - Click Generate
-- Select `*-PTH.drl_cnc`, export G-Code to `PTH.drl.nc`
+- Select `*-PTH.drl_cnc`, set tool dia to 0.8, export G-Code to `PTH.drl.nc`
 - Select `*.Edge_Cuts.gbr`
   - Board cutout section
   - Tool dia: 2.5
