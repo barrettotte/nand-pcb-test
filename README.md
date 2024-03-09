@@ -149,11 +149,15 @@ Alternatively, I saw a lot of people using carpet tape.
 - TODO: probe setup
 - Jog machine to upper left corner, z probe, zero XY
 - Height map
-  - Set Border: TODO:
+  - Load nc file, click auto
+  - Zero XYZ, set bit at origin
   - Probe grid, set to be ~10mm apart
-  - Interpolation grid: same as probe grid?
+  - Interpolation grid: 20, 20
+  - zt = 1.0, zb = -1.0
+  - Click Probe
   - Save as `height.map`
-  - Verify "Use Heightmap" is checked
+  - Click edit mode to leave edit mode
+  - Verify use heightmap is checked
 - Remove probes
 - Load `B.Cu.nc`
 - TODO: swap to drill bit, re-zero Z
