@@ -50,10 +50,11 @@ TODO: image of CNC
 - Generally only use back copper and front silkscreen
 - Rearrange rats nest of components to eliminate overlap
 - Set design rules (File > Board Setup)
-  - Minimum clearance: 0.5mm (~20 mil)
+  - Minimum clearance: 0.5mm
   - Minimum track width: 0.5mm
-  - Copper to edge clearance: 0mm
-  - Minimum through hole: 0.8mm
+  - Copper to hole clearance: 0.5mm
+  - Copper to edge clearance: 0.5mm
+  - Minimum through hole: 0.7mm
   - Hole to hole clearance: 0.5mm
 - Route tracks on `B.Cu` (back copper) layer. Ignore ground pins, will be filled later
 - Select `Edge.Cuts` layer, draw a rectangle to trace board boundary, thickness 1mm
@@ -61,6 +62,7 @@ TODO: image of CNC
 - Right click fill edge, Zones > Fill Zone
 - Add orthogonal dimensions to `User.Drawings` layer to double check board width/height
 - Place origin at top left of board
+- Run Design Rules Checker ()
 - Export Gerber files (File > Plot)
   - Check Use drill/place file origin
   - Export `B.Cu`, `Edge.Cuts` (used in router step)
@@ -76,7 +78,7 @@ TODO: image of CNC
 
 Bits I will be using:
 
-- Isolation routing: 0.1mm 20deg v bit
+- Isolation routing: 0.1 60deg v-bit
 - Holes: 0.8mm drill bit
 - Edge cut: 2.5mm end mill bit
 
@@ -88,20 +90,20 @@ Bits I will be using:
   - Set units to mm
 - Select `*-B_Cu.gbr`
   - Isolation Routing section
-  - Tool dia: 0.2
+  - Tool dia: 0.45 (must be less than minimum isolation widths set in Kicad)
   - Width (# passes): 2
-  - Pass overlap: 0.25
+  - Pass overlap: 0.75
   - Combine Passes: yes
   - Click Generate Geometry
 - Select `*-B_Cu.gbr_iso`
   - Create CNC Job section
-  - Cut Z: -0.03
+  - Cut Z: -0.015
   - Travel Z: 2
-  - Feed Rate: 100.0
+  - Feed Rate: 85.0
   - Tool dia: 0.2
   - Spindle speed: 10000
   - Multi-Depth: yes
-  - Depth/pass: 0.015
+  - Depth/Pass: 0.08
   - Click Generate
 - Select `*-B_Cu.gbr_iso_cnc`, export G-Code to `B_Cu.nc`
 - Select `*-PTH.drl`
@@ -110,8 +112,7 @@ Bits I will be using:
   - Cut Z: -2
   - Travel Z: 2
   - Feed Rate: 100.0
-  - Tool Change: yes
-  - Tool Change Z: 15.0
+  - Tool Change: no
   - Spindle Speed: 10000
   - Click Generate
 - Select `*-PTH.drl_cnc`, set tool dia to 0.8, export G-Code to `PTH.drl.nc`
@@ -119,18 +120,18 @@ Bits I will be using:
   - Board cutout section
   - Tool dia: 2.5
   - Margin: 0.1
-  - Gap size: 4
+  - Gap size: 1.0
   - Gaps: 4
   - Click Generate Geometry
 - Select `*-Edge_Cuts.gbr_cutout`
   - Create CNC Job section
   - Cut Z: -2
   - Travel Z: 2.0
-  - Feed Rate: 3.0
+  - Feed Rate: 50.0
   - Tool dia: 2.5
   - Spindle speed: 10000
   - Multi-Depth: yes
-  - Depth/pass: 0.6
+  - Depth/pass: 0.25
   - Click Generate
 - Select `*-Edge_Cuts.gbr_cutout_cnc`, export G-Code to `Edge_Cuts.nc`
 
@@ -145,6 +146,8 @@ Refer to bits in "Computer Aided Manufacturing (CAM)" section
 To secure the PCB to the bed, 
 I used 3D printed M6 Plate Clamps from https://www.printables.com/model/250450-enhancements-for-sainsmartgenmitsu-3020-pro-max-cn/files. 
 Alternatively, I saw a lot of people using carpet tape.
+
+TODO: list job times
 
 - TODO: probe setup
 - Jog machine to upper left corner, z probe, zero XY
@@ -175,19 +178,13 @@ TODO:
   - $32 = 1 (laser mode)
 - Turn on laser low power, adjust Z-axis until dot is as small as possible (finding the focal point)
 
-### Solder Masking (optional)
-
-TODO:
-
 ### Final Steps
 
-- Use 400-600 grit sandpaper to remove any small burrs
+- Use 400-600 grit sandpaper and/or steel wool to remove any small burrs
 - Clean off with a bit of isopropyl alcohol
 - Use multimeter to check all tracks for shorts
-
-TODO: Prevent copper corrosion - clear nail polish? liquid tin? or UV masking
-
-Clean flux with isopropyl
+- Solder components
+- Clean any flux with isopropyl
 
 ## References
 

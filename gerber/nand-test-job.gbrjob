@@ -5,17 +5,17 @@
       "Application": "Pcbnew",
       "Version": "(6.0.9)"
     },
-    "CreationDate": "2024-03-08T19:22:42-05:00"
+    "CreationDate": "2024-03-17T00:13:10-04:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
       "Name": "nand-test",
       "GUID": "6e616e64-2d74-4657-9374-2e6b69636164",
-      "Revision": "v01"
+      "Revision": "rev?"
     },
     "Size": {
-      "X": 49.26,
-      "Y": 34.02
+      "X": 50.138,
+      "Y": 33.628
     },
     "LayerNumber": 2,
     "BoardThickness": 1.6,
