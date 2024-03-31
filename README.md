@@ -1,6 +1,6 @@
 # nand-pcb-test
 
-Homemade PCB test using a CNC router and laser.
+Homemade PCB test using a CNC router.
 
 Hopefully this is useful to someone else wanting a single place to see the whole CNC PCB building process.
 These notes assume you have a basic understanding of Kicad and Candle (grblcontrol).
@@ -62,37 +62,50 @@ TODO: image of CNC
 - Right click fill edge, Zones > Fill Zone
 - Add orthogonal dimensions to `User.Drawings` layer to double check board width/height
 - Place origin at top left of board
-- Run Design Rules Checker ()
+- Run Design Rules Checker
+- If exporting `F.Silkscreen`, I recommend setting text thickness to 0.1mm 
 - Export Gerber files (File > Plot)
   - Check Use drill/place file origin
   - Export `B.Cu`, `Edge.Cuts` (used in router step)
-  - Export `F.Silkscreen` (used in optional laser silkscreen step) TODO: dxf or svg?
-  - Export `B.Mask` (used in optional solder masking step) TODO: dxf or svg?
+  - Export `B.Mask` (used in optional solder masking step) as PDF
   - Generate Drill Files (`*-NPTH.drl` and `*-PTH.drl`)
     - Drill Origin = Drill/place file origin
     - Drill Units = Millimeters
+- Print (File > Print) `F.Silkscreen` and `F.Mask` layers to PDF (used in silkscreen step)
+  - Verify Print One Page Per Layer is unchecked
+  - Scale 1:1
+  - Select Print Mirrored
 
 ![images/kicad-pcb.png](images/kicad-pcb.png)
 
-### Computer Aided Manufacturing (CAM)
+### Bits
 
-Bits I will be using:
-
-- Isolation routing: 0.1 60deg v-bit
+- Isolation routing: 0.5mm pcb milling bit
 - Holes: 0.8mm drill bit
 - Edge cut: 2.5mm end mill bit
 
+I know a lot of people seem to recommend v-bits, but I found them to cut too
+inconsistent to quickly throw together boards. 
+
+I did manage to get a couple boards cut with a 0.1mm 60deg bit after manually offsetting my heightmap by 0.05 increments, but I could not replicate this every time. 
+Switching to the pcb milling bit removed ~5-10 minutes of manual adjustment.
+
+### Computer Aided Manufacturing (CAM)
+
 - Launch FlatCAM
 - Load `B.Cu` and `Edge.Cuts` gerber files (File > Open Gerber)
-- Add drill files (File > Open Excellon)
+- Add drill files (`*.drl`) (File > Open Excellon)
   - Note: Ignore "No geometry found in file" error if no NPTH holes needed
 - Options tab
   - Set units to mm
+- Mirror on y-axis since we're cutting the back copper
+  - Tool > Double-Sided PCB Tool
+  - Mirror `B.Cu` and `*.drl` files on y-axis using Point/Box
 - Select `*-B_Cu.gbr`
   - Isolation Routing section
-  - Tool dia: 0.45 (must be less than minimum isolation widths set in Kicad)
+  - Tool dia: 0.45 (note: 0.05 less than clearance set in Kicad)
   - Width (# passes): 2
-  - Pass overlap: 0.75
+  - Pass overlap: 0.10
   - Combine Passes: yes
   - Click Generate Geometry
 - Select `*-B_Cu.gbr_iso`
@@ -100,7 +113,7 @@ Bits I will be using:
   - Cut Z: -0.015
   - Travel Z: 2
   - Feed Rate: 85.0
-  - Tool dia: 0.2
+  - Tool dia: 0.45 (note: 0.05 less than clearance set in Kicad)
   - Spindle speed: 10000
   - Multi-Depth: yes
   - Depth/Pass: 0.08
@@ -112,7 +125,7 @@ Bits I will be using:
   - Cut Z: -2
   - Travel Z: 2
   - Feed Rate: 100.0
-  - Tool Change: no
+  - Tool Change: no (unless using multiple drill sizes)
   - Spindle Speed: 10000
   - Click Generate
 - Select `*-PTH.drl_cnc`, set tool dia to 0.8, export G-Code to `PTH.drl.nc`
@@ -135,9 +148,11 @@ Bits I will be using:
   - Click Generate
 - Select `*-Edge_Cuts.gbr_cutout_cnc`, export G-Code to `Edge_Cuts.nc`
 
-### Preparing Silkscreen (optional)
+### Preparing Silkscreen
 
-TODO: vector image - inkscape for laser?
+- Open in `F.Silkscreen` PDF in Inkscape (to remove blank space of PDF document)
+  - Select silkscreen components, export
+  - Export Selection tab, Export Selected Only, 300.0 DPI, SVG
 
 ### CNC Routing
 
@@ -163,39 +178,36 @@ TODO: list job times
   - Verify use heightmap is checked
 - Remove probes
 - Load `B.Cu.nc`
-- TODO: swap to drill bit, re-zero Z
+- Swap to drill bit, re-zero Z
 - Load `PTH.drl.nc`
-- TODO: swap to edge cut bit, re-zero Z
+- Swap to edge cut bit, re-zero Z
 - Load `Edge_Cuts.nc`
 
-### Laser Etching Silkscreen (optional)
+### Silkscreen
 
-TODO:
-
-- Launch LaserGrbl
-- Grbl > Grbl Configuration
-  - $30 = 1000 RPM (configures laser power)
-  - $32 = 1 (laser mode)
-- Turn on laser low power, adjust Z-axis until dot is as small as possible (finding the focal point)
+- Load thermal transfer paper into printer
+- Print `F.Silkscreen` SVG onto thermal transfer paper (smooth side up)
+  - Ensure scale is 100%
+- Tape thermal paper to front of PCB (toner side down)
+- Use highest setting of dry iron to heat evenly for 2-3 minutes
 
 ### Final Steps
 
-- Use 400-600 grit sandpaper and/or steel wool to remove any small burrs
+- Use 400-600 grit sandpaper and/or steel wool to remove any small burrs on back copper
+- File down tabs on sides of PCB
 - Clean off with a bit of isopropyl alcohol
 - Use multimeter to check all tracks for shorts
 - Solder components
-- Clean any flux with isopropyl
+- Clean off any flux with isopropyl
 
 ## References
 
 - [Candle](https://github.com/trasz/grblControl)
 - [FlatCAM](http://flatcam.org/)
 - [GCODE Reference](https://marlinfw.org/meta/gcode/)
-- [LaserGRBL](https://lasergrbl.com/)
 - Youtube
-  - [3018 Pro - Setting up your laser; James Dean Designs](https://www.youtube.com/watch?v=YnFNFEdmPjU)
-  - [3018 Pro - Basics for Laser Engraving; James Dean Designs](https://www.youtube.com/watch?v=pCmazk-yTVo)
   - [Homemade custom PCB guide using free KiCAD software; Teaching Tech](https://www.youtube.com/watch?v=NgDXPWaA5Ic)
+  - [Homemade PCB using thermal transfer paper](https://www.youtube.com/watch?v=aemG_4sDz_Q)
   - [Intro to Kicad; Shawn Hymel](https://www.youtube.com/playlist?list=PL3bNyZYHcRSUhUXUt51W6nKvxx2ORvUQB)
   - [Machining a PCB on the 3-axis CNC Bridgeport Mill; Usagi Electric](https://www.youtube.com/watch?v=AB84_vbH_e8)
   - [Milling PCBs on a Homemade CNC (Part 2): Masking](https://www.youtube.com/watch?v=qIxvXU7KDmE)
