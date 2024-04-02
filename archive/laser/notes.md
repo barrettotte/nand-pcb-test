@@ -5,6 +5,10 @@ and was struggling to keep things aligned when flipping over a freshly routed bo
 
 ## Notes
 
+## Equipment
+
+- [RFL10W 10W Compressed FAC Laser Module](https://www.sainsmart.com/collections/genmitsu-cnc-replacement-upgrade-parts/products/10w-compressed-fac-laser-module-with-air-assist-nozzle-for-genmitsu-cnc-laser-machine)
+
 ### Preparing Silkscreen (optional)
 
 - Open in `F.Silkscreen` PDF in Inkscape
