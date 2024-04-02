@@ -5,6 +5,8 @@ Homemade PCB test using a CNC router.
 Hopefully this is useful to someone else wanting a single place to see the whole CNC PCB building process.
 These notes assume you have a basic understanding of Kicad and Candle (grblcontrol).
 
+TODO: front and back finished PCB
+
 ## Why?
 
 There are plenty of companies that offer cheap PCB manufacturing, but I'm impatient and bad at designing things correctly on the first try.
@@ -18,12 +20,19 @@ Maybe I'll also add a chemical etching bonus section in the future.
 ## Equipment
 
 - [Genmitsu 3020-PRO MAX V2 CNC Router](https://www.sainsmart.com/collections/new-genmitsu-collection/products/3020-pro-max-v2)
-  - [3040 Y-Axis Extension Kit](https://www.sainsmart.com/collections/genmitsu-cnc-replacement-upgrade-parts/products/3020-yaxis-extension-kit)
-  - [RFL10W 10W Compressed FAC Laser Module](https://www.sainsmart.com/collections/genmitsu-cnc-replacement-upgrade-parts/products/10w-compressed-fac-laser-module-with-air-assist-nozzle-for-genmitsu-cnc-laser-machine)
+  - [3040 Y-Axis Extension Kit](https://www.sainsmart.com/collections/genmitsu-cnc-replacement-upgrade-parts/products/3020-yaxis-extension-kit) (optional)
 - [FR-4 Copper Clad PCB Laminate Board, Single Side, 4 x 2.7 inch (10 piece)](https://www.amazon.com/dp/B01MCVLDDZ)
-- TODO: bits
+- Bits
+  - [0.5mm PCB End Mill Bit](https://www.amazon.com/gp/product/B073RJ3SYZ)
+  - [0.8mm PCB Drill Bit](https://www.amazon.com/gp/product/B091FD44Y3)
+  - [2.5mm End Mill Bit](https://www.amazon.com/gp/product/B07P84V888)
+  - [Assorted PCB Drill Bit Set](https://www.amazon.com/gp/product/B08M5PLF48)
+- [Mini Dry Iron](https://www.amazon.com/gp/product/B09YXVWSTQ)
+- [Thermal Transfer Paper](https://www.amazon.com/gp/product/B07GLGL2CX)
+- [Monochrome Laser Printer](https://www.amazon.com/gp/product/B00NQ1CLTI)
+- [Mini Drill Press](https://www.amazon.com/gp/product/B0BKZRD2P7)
 
-TODO: image of CNC
+<img src="images/cnc.jpg" alt="cnc router" width="50%" height="50%"/>
 
 ## Build Process
 
@@ -38,11 +47,11 @@ TODO: image of CNC
   - Tools > Assign Footprints
   - File > Plot > PDF, Plot All Pages
 
-![images/breadboard.jpg](images/breadboard.jpg)
+<img src="images/breadboard.jpg" alt="breadboard" width="50%" height="50%"/>
 
-![images/protoboard.jpg](images/protoboard.jpg)
+<img src="images/protoboard.jpg" alt="protoboard" width="50%" height="50%"/>
 
-![images/kicad-schematic.png](images/kicad-schematic.png)
+<img src="images/kicad-schematic.png" alt="kicad schematic" width="50%" height="50%"/>
 
 ### PCB Design
 
@@ -67,7 +76,7 @@ TODO: image of CNC
 - Export Gerber files (File > Plot)
   - Check Use drill/place file origin
   - Export `B.Cu`, `Edge.Cuts` (used in router step)
-  - Export `B.Mask` (used in optional solder masking step) as PDF
+  - Export `B.Mask` (used in solder masking step) as PDF
   - Generate Drill Files (`*-NPTH.drl` and `*-PTH.drl`)
     - Drill Origin = Drill/place file origin
     - Drill Units = Millimeters
@@ -76,9 +85,15 @@ TODO: image of CNC
   - Scale 1:1
   - Select Print Mirrored
 
-![images/kicad-pcb.png](images/kicad-pcb.png)
+<img src="images/kicad-pcb.png" alt="kicad pcb" width="50%" height="50%"/>
+
+<img src="images/kicad-3d-front.png" alt="kicad pcb 3d front" width="50%" height="50%"/>
+
+<img src="images/kicad-3d-back.png" alt="kicad pcb 3d back" width="50%" height="50%"/>
 
 ### Bits
+
+Refer to bits listed in Equipment section above.
 
 - Isolation routing: 0.5mm pcb milling bit
 - Holes: 0.8mm drill bit
@@ -148,9 +163,11 @@ Switching to the pcb milling bit removed ~5-10 minutes of manual adjustment.
   - Click Generate
 - Select `*-Edge_Cuts.gbr_cutout_cnc`, export G-Code to `Edge_Cuts.nc`
 
+<img src="images/pcb-routed.jpg" alt="routed pcb" width="50%" height="50%"/>
+
 ### Preparing Silkscreen
 
-- Open in `F.Silkscreen` PDF in Inkscape (to remove blank space of PDF document)
+- Open `F.Silkscreen` PDF in Inkscape (to remove blank space of PDF document)
   - Select silkscreen components, export
   - Export Selection tab, Export Selected Only, 300.0 DPI, SVG
 
@@ -162,9 +179,10 @@ To secure the PCB to the bed,
 I used 3D printed M6 Plate Clamps from https://www.printables.com/model/250450-enhancements-for-sainsmartgenmitsu-3020-pro-max-cn/files. 
 Alternatively, I saw a lot of people using carpet tape.
 
-TODO: list job times
+Probe setup using aluminum tape and z-probe that came with CNC router.
 
-- TODO: probe setup
+<img src="images/cnc-probe.jpg" alt="cnc probe setup" width="50%" height="50%"/>
+
 - Jog machine to upper left corner, z probe, zero XY
 - Height map
   - Load nc file, click auto
@@ -190,15 +208,21 @@ TODO: list job times
   - Ensure scale is 100%
 - Tape thermal paper to front of PCB (toner side down)
 - Use highest setting of dry iron to heat evenly for 2-3 minutes
+- Apply polycrylic to preserve silkscreen
+
+<img src="images/silkscreen.png" alt="silkscreen" width="50%" height="50%"/>
 
 ### Final Steps
 
+- Use mini drill press to adjust any holes for larger through hole parts
 - Use 400-600 grit sandpaper and/or steel wool to remove any small burrs on back copper
 - File down tabs on sides of PCB
 - Clean off with a bit of isopropyl alcohol
 - Use multimeter to check all tracks for shorts
 - Solder components
 - Clean off any flux with isopropyl
+
+TODO: front and back finished PCB
 
 ## References
 
