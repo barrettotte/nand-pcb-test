@@ -5,7 +5,9 @@ Homemade PCB test using a CNC router.
 Hopefully this is useful to someone else wanting a single place to see the whole CNC PCB building process.
 These notes assume you have a basic understanding of Kicad and Candle (grblcontrol).
 
-TODO: front and back finished PCB
+<img src="images/assembled-front.jpg" alt="assembled front" width="50%" height="50%"/>
+
+<img src="images/assembled-back.jpg" alt="assembled back" width="50%" height="50%"/>
 
 ## Why?
 
@@ -16,6 +18,9 @@ Manufacturing with a CNC router helps to eliminate waiting time between idea and
 Alternatively, plenty of people use the chemical etching process (example: thermal transfer paper and ferric chloride) to build their PCBs.
 I just don't have a good workspace to mess with nasty chemicals, so the CNC approach is more doable for me.
 Maybe I'll also add a chemical etching bonus section in the future.
+
+For 2+ sided PCBs, it would be worth ordering from a company. Double-sided PCBs are possible, but I have not attempted this yet.
+I also haven't tried designs with SMD components yet, so that may also be a pain point that warrants ordering PCBs from a company.
 
 ## Equipment
 
@@ -222,7 +227,14 @@ Probe setup using aluminum tape and z-probe that came with CNC router.
 - Solder components
 - Clean off any flux with isopropyl
 
-TODO: front and back finished PCB
+<img src="images/assembled-front.jpg" alt="assembled front" width="50%" height="50%"/>
+
+<img src="images/assembled-back.jpg" alt="assembled back" width="50%" height="50%"/>
+
+## Archive
+
+I tried to do a couple different steps that I hope to try again in the future.
+I left my notes in [archive/](archive/).
 
 ## References
 
